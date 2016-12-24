@@ -16,8 +16,15 @@ public:
 			readHand(3);
 			check_compare();
 		} else {
-			readCollection();	
-			check_contain();
+			if(type==1){
+				readCollection();	
+				check_contain();
+			}
+			if(type==2){
+				readHand(5);
+				readCollection();
+				check_contain_under();
+			}
 		}
 	}
 private:
@@ -58,6 +65,15 @@ private:
 		cout << b1 << endl;
 		if (b1) {
 			master.determineMe(hand);
+			hand.print();
+			cout << endl;
+		}
+	}
+	void check_contain_under() {
+		CprHand hand;
+		bool b1 = master.containsMeUnder(_col, _hand1,hand);
+		cout << b1 << endl;
+		if (b1) {
 			hand.print();
 			cout << endl;
 		}

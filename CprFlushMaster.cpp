@@ -103,6 +103,39 @@ bool CprFlushMaster::containsMe(const CprCollection& col, CprHand& res) {
 		return 1;
 	return 0;
 }
+//DONE
 bool CprFlushMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
+	CardList newlist;
+	CardList _ACR[15];
 
+	for(int i=0;i<15;i++){
+		_ACR[i]=col.getACR()[i];
+	}
+
+	for(int i=14;i>=2;i--){
+		for(int ii=0;ii<_ACR[i].size();ii++){
+			int nowsuit=_ACR[i][ii].suit();
+			newlist.push_back(_ACR[i][ii]);
+			int nownumcount=1;
+			for(int j=i-1;j>=2;j--){
+				for(int jj=0;jj<_ACR[j].size();jj++){
+					if(_ACR[j][jj].suit()==nowsuit){
+						newlist.push_back(_ACR[j][jj]);
+						nownumcount++;
+					}
+				if(nownumcount==5){
+					CprHand newhand(newlist);
+					if((!res.size()||(res.size()&&!compareDeeply(newhand,res)))&&
+						!compareDeeply(uppHand,newhand)){
+						res=newhand;
+					}
+				}
+				}
+			}
+			newlist.clear();
+		}
+	}
+	if(res.size()==5)
+		return 1;
+	return 0;	
 }

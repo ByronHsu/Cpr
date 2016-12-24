@@ -135,5 +135,55 @@ bool CprStraightFlushMaster::containsMe(const CprCollection& col, CprHand& res) 
 	return false;
 }
 bool CprStraightFlushMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
+	CardList newlist;
+	CardList _ACR[15];
 
+	for(int i=0;i<15;i++){
+		_ACR[i]=col.getACR()[i];
+	}
+	//10JQKA > 910JQK > ... > 23456 > A2345
+	for(int i=10;i>=1;i--){
+		for(int ii=0;ii<_ACR[i].size();ii++){
+			int nowsuit=_ACR[i][ii].suit();
+			for(int j=0;j<=4;j++){
+				int index=i+j;
+				if(i+j>13)
+					index%=13;
+				if(_ACR[index].size()==0){
+					break;
+				}
+				else{
+					bool b=0;
+					for(int jj=0;jj<_ACR[index].size();jj++){
+						if(_ACR[index][jj].suit()==nowsuit)
+							b=1;
+					}
+				
+					if(b==0)
+						break;
+					//success
+					if(j==4){
+					
+						for(int k=0;k<=4;k++){
+							int index2=i+k;
+							if(i+k>13)
+								index%=13;
+							for(int kk=0;kk<_ACR[index2].size();kk++)
+								if(_ACR[index2][kk].suit()==nowsuit)
+									newlist.push_back(_ACR[index2][kk]);
+						}
+						CprHand newhand(newlist);
+						if(!compareDeeply(uppHand,newhand)){
+							res=newhand;
+							return 1;
+						}
+						newlist.clear();
+					}
+				}
+
+			}
+		}
+		
+	}
+	return false;
 }

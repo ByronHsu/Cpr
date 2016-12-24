@@ -98,5 +98,37 @@ bool CprStraightMaster::containsMe(const CprCollection& col, CprHand& res) {
 	return false;	
 }
 bool CprStraightMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
+	CardList _ACR[15];
+	CardList newlist;
+	for(int i=0;i<15;i++){
+		_ACR[i]=col.getACR()[i];
+	}
+	for(int i=10;i>=1;i--){
+		for(int j=0;j<=4;j++){
+			int index=i+j;
+			if(i+j>13)
+				index%=13;
+			if(_ACR[index].size()==0){
+				break;
+			}
+			//success
+			if(j==4){
+				for(int k=0;k<=4;k++){
+					int index2=i+k;
+					if(i+k>13)
+						index%=13;
+					newlist.push_back(_ACR[index2][0]);
+				}
+				CprHand newhand(newlist);
+				if(!compareDeeply(uppHand,newhand)){
+					res=newhand;
+					return 1;
+				}
+				newlist.clear();
+			}
 
+		}
+	}
+
+	return false;	
 }

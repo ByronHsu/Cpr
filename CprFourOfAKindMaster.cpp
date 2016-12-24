@@ -51,7 +51,7 @@ bool CprFourOfAKindMaster::determineMe(CprHand& hand) {
 	for(int i=0;i<_ACR[numof4].size();i++)
 		newlist.push_back(_ACR[numof4][i]);
 	for(int i=14;i>=2;i--){
-		if(i!=numof4&&_ACR[i].size()==1){
+		if(i!=numof4&&_ACR[i].size()){
 			newlist.push_back(_ACR[i][0]);
 		}
 	}
@@ -80,7 +80,7 @@ bool CprFourOfAKindMaster::containsMe(const CprCollection& col, CprHand& res) {
 	for(int i=0;i<_ACR[numof4].size();i++)
 		newlist.push_back(_ACR[numof4][i]);
 	for(int i=14;i>=2;i--){
-		if(i!=numof4&&_ACR[i].size()==1){
+		if(i!=numof4&&_ACR[i].size()){
 			newlist.push_back(_ACR[i][0]);
 		}
 		if(newlist.size()==5)
@@ -91,5 +91,33 @@ bool CprFourOfAKindMaster::containsMe(const CprCollection& col, CprHand& res) {
 	return true;
 }
 bool CprFourOfAKindMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
+	CardList _ACR[15];
+	CardList newlist;
+	for(int i=0;i<15;i++){
+		_ACR[i]=col.getACR()[i];
+	}
 
+	for(int i1=14;i1>=2;i1--){
+		if(_ACR[i1].size()==4){
+			for(int j=0;j<4;j++)
+				newlist.push_back(_ACR[i1][j]);
+			for(int i2=14;i2>=2;i2--){
+				if(_ACR[i2].size()){
+					for(int j=0;j<1;j++)
+						newlist.push_back(_ACR[i2][j]);
+					CprHand newhand(newlist);
+					if(!compareDeeply(uppHand,newhand)){
+						res=newhand;
+						return 1;
+					}
+					newlist.pop_back();	
+				}
+			}
+			newlist.pop_back();
+			newlist.pop_back();
+			newlist.pop_back();
+			newlist.pop_back();
+		}
+	}
+	return 0;
 }
