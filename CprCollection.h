@@ -10,6 +10,10 @@
 class CprCollection
 {
 	FRIEND_ALL;
+	friend class CprStage;
+	friend class CprStupidAi;
+	friend class CprGreedyAi;
+	friend class CprHandMaster;
 public:
 	CprCollection();
 	~CprCollection();
@@ -27,7 +31,7 @@ public:
 	void printByRank() const;
 	void printBySuit() const;
 	void showCollection() const;
-	bool isValidSet() const;
+	bool isValidSet() ;
 
 private:
 	CardList _cards;

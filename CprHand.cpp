@@ -7,6 +7,9 @@
 #include "CprHand.h"
 #include "CprHandMaster.h"
 //new
+void CprHand::setXianggong(){
+    _type=(HandType)1;
+}
 const CprCard CprHand::getCard(int idx) const {
     return _cards.at(idx);
 }
@@ -15,6 +18,18 @@ const CardList& CprHand::getCards() const {
 }
 const CardList * CprHand::getACR() const {
     return _ACR;
+}
+bool CprHand::operator <= (const CprHand& hand) const{
+    CprHandMaster master;
+    return(master.Compare((*this),hand));
+}
+bool CprHand::operator >= (const CprHand& hand) const{
+    CprHandMaster master;
+    return(master.Compare(hand,(*this))); 
+}
+bool CprHand::operator > (const CprHand& hand) const{
+    CprHandMaster master;
+    return(!master.Compare((*this),hand)); 
 }
 int CprHand::isCardAvailable(const CprCard& c) const {
     // TODO: find whether c is in _cards

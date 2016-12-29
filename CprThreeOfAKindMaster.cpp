@@ -70,7 +70,7 @@ bool CprThreeOfAKindMaster::containsMe(const CprCollection& col, CprHand& res) {
 	int numof3=0;
 
 	for(int i=14;i>=2;i--){
-		if(_ACR[i].size()==3){
+		if(_ACR[i].size()>=3){
 			numof3=i;
 			break;
 		}
@@ -80,7 +80,7 @@ bool CprThreeOfAKindMaster::containsMe(const CprCollection& col, CprHand& res) {
 	for(int i=0;i<_ACR[numof3].size();i++)
 		newlist.push_back(_ACR[numof3][i]);
 	for(int i=14;i>=2;i--){
-		if(i!=numof3&&_ACR[i].size()==1){
+		if(i!=numof3&&_ACR[i].size()){
 			newlist.push_back(_ACR[i][0]);
 		}
 		if(newlist.size()==5)
@@ -98,14 +98,14 @@ bool CprThreeOfAKindMaster::containsMeUnder(const CprCollection& col, const CprH
 	}
 
 	for(int i=14;i>=2;i--){
-		if(_ACR[i].size()==3){
+		if(_ACR[i].size()>=3){
 			for(int j=0;j<3;j++)
 				newlist.push_back(_ACR[i][j]);
 			for(int j1=14;j1>=2;j1--){
-				if(_ACR[j1].size()==1){
+				if(_ACR[j1].size()&&j1!=i){
 					newlist.push_back(_ACR[j1][0]);
 					for(int j2=j1-1;j2>=2;j2--){
-						if(_ACR[j2].size()==1){
+						if(_ACR[j2].size()&&j2!=i){
 							newlist.push_back(_ACR[j2][0]);
 							CprHand newhand(newlist);
 							if(!compareDeeply(uppHand,newhand)){

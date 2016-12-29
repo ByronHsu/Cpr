@@ -1,29 +1,26 @@
-#include "test_HandMaster.h"
+/****************************************************************************
+  FileName   [ main.cpp ]
+  Author     [ Haowei Luan ]
+  Synopsis   [ main of Chinese Poker Game ]
+****************************************************************************/
+/*
+g++ -std=c++11 CprAiPlayer.cpp            CprFlushMaster.cpp         CprHandMaster.cpp          CprStage.cpp CprAiPlayer.h   CprFourOfAKindMaster.cpp   CprHandMaster.h            CprStage.h CprCard.cpp                CprFullHouseMaster.cpp     CprHandType.h              CprStraightFlushMaster.cpp CprCard.h                  CprGame.cpp                CprHighCardMaster.cpp      CprStraightMaster.cpp CprCollection.cpp          CprGame.h                  CprHumanPlayer.cpp         CprStupidAi.cpp CprCollection.h            CprGreedyAi.cpp            CprHumanPlayer.h           CprStupidAi.h CprDealer.h                CprGreedyAi.h              CprOnePairMaster.cpp       CprThreeOfAKindMaster.cpp CprDef.h                   CprHand.cpp                CprPlayer.cpp              CprTwoPairMaster.cpp CprEachMaster.h            CprHand.h                  CprPlayer.h                main.cpp
+*/
+#include "CprDef.h"
+#include "CprGame.h"
 using namespace std;
 
 int main() {
-	CprHandMasterTest mtest;
-	mtest.run();	
+	// FIXME: put your group id here
+	const int GroupID = 0;
+	cout << "This is group " << GroupID << "'s program." << endl;
+
+	int seed = (unsigned)time(0);
+	cout << "Using seed " << seed << ".." << endl;
+ 	srand(seed);
+ 	
+	CprGame game;
+	game.setting();
+	game.start();
+	return 0;
 }
-
-/*
-### 0.in ###
-0
-2h 2d 2s 3h 3s
-3d 4h 5s 6d 7d
-9d As Ah
-
-### 0.out ###
-FullHouse
-Straight
-OnePair
-1
-1
-
-### 1.in ###
-1
-3c 4c 5c 6s 7c 4d 7d 9d 7h Kh Ah 2d 3d
-
-### 1.out ###
-7c 7d 7h 4c 4d
-*/

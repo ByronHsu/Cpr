@@ -13,6 +13,8 @@ class CprHand
 {
 	FRIEND_ALL;
 	friend class CprCollection;
+	friend class CprStage;
+	friend class CprGreedyAi;
 public:
 	CprHand();
 	CprHand(const CardList&);
@@ -20,7 +22,7 @@ public:
 	~CprHand();
 	bool operator <= (const CprHand& hand) const;
 	bool operator >= (const CprHand& hand) const;
-	
+	bool operator > (const CprHand& hand) const;
 	const CardList& getCards() const;
 	void setXianggong();
 	void print() const;

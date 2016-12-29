@@ -51,6 +51,11 @@ bool CprHighCardMaster::containsMe(const CprCollection& col, CprHand& res) {
 			}
 		}
 	}
+	if(newlist.size()==3){
+		res=newlist;
+		return 1;
+	}
+	return 0;
 }
 
 bool CprHighCardMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
@@ -100,6 +105,9 @@ bool CprHighCardMaster::containsMeUnder(const CprCollection& col, const CprHand&
 			newlist.pop_back();
 		}
 	}
-
+	if(newlist.size()==3){
+		res=newlist;
+		return 1;
+	}
 	return 0;
 }

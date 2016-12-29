@@ -72,8 +72,10 @@ bool CprOnePairMaster::containsMe(const CprCollection& col, CprHand& res) {
 		_ACR[i]=col.getACR()[i];
 	}
 	bool has2num=0;
+	int numof2;
 	for(int i=14;i>=2;i--){
-		if(_ACR[i].size()==2){
+		if(_ACR[i].size()>=2){
+			numof2=i;
 			has2num=1;
 			for(int j=0;j<2;j++)
 				newlist.push_back(_ACR[i][j]);
@@ -83,7 +85,7 @@ bool CprOnePairMaster::containsMe(const CprCollection& col, CprHand& res) {
 	if(!has2num)
 		return false;
 	for(int i=14;i>=2;i--){
-		if(_ACR[i].size()==1){
+		if(_ACR[i].size()&&i!=numof2){
 			newlist.push_back(_ACR[i][0]);
 		}
 		if(newlist.size()==5){
@@ -103,17 +105,17 @@ bool CprOnePairMaster::containsMeUnder(const CprCollection& col, const CprHand& 
 	}
 
 	for(int i=14;i>=2;i--){
-		if(_ACR[i].size()==2){
+		if(_ACR[i].size()>=2){
 			for(int j=0;j<2;j++)
 				newlist.push_back(_ACR[i][j]);
 			for(int j1=14;j1>=2;j1--){
-				if(_ACR[j1].size()==1){
+				if(_ACR[j1].size()&&j1!=i){
 					newlist.push_back(_ACR[j1][0]);
 					for(int j2=j1-1;j2>=2;j2--){
-						if(_ACR[j2].size()==1){
+						if(_ACR[j2].size()&&j2!=i){
 							newlist.push_back(_ACR[j2][0]);
 							for(int j3=j2-1;j3>=2;j3--){
-								if(_ACR[j3].size()==1){
+								if(_ACR[j3].size()&&j3!=i){
 									newlist.push_back(_ACR[j3][0]);
 									CprHand newhand(newlist);
 									if(!compareDeeply(uppHand,newhand)){

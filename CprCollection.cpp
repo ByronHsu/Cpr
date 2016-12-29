@@ -1,7 +1,12 @@
 #include "CprCollection.h"
 #include "CprHand.h"
  
- 
+CprHand& CprCollection::hand(int n){
+    return _hands[n];
+}
+const CardList& CprCollection::getAvailableCards() const{
+    return _availCards;
+}
 CprCollection::CprCollection()
     :_cards(), _hands(3) {
     // DONE: now _hands.size() is 3
@@ -115,10 +120,25 @@ void CprCollection::showCollection() const {
     }
 }
  
-bool CprCollection::isValidSet() const {
+bool CprCollection::isValidSet() {
     //    TODO: determine whether all hands are set
     if(!_hands[0].empty()&&!_hands[1].empty()&&!_hands[2].empty())
         return 1;
+    if(!_hands[0].empty()&&!_hands[1].empty()){
+        CprHand temp(_availCards);
+        _hands[2]=temp;
+        return 1;
+    }
+    if(!_hands[1].empty()&&!_hands[2].empty()){
+        CprHand temp(_availCards);
+        _hands[0]=temp;
+        return 1;
+    }
+    if(!_hands[0].empty()&&!_hands[2].empty()){
+        CprHand temp(_availCards);
+        _hands[1]=temp;
+        return 1;
+    }
     else return 0;
 }
  

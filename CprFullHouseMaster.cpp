@@ -61,7 +61,7 @@ bool CprFullHouseMaster::determineMe(CprHand& hand) {
 				}
 			}
 			else
-				if(_ACR[i].size()>=2){
+				if(_ACR[i].size()==2){
 					two_num=i;
 					for(int j=0;j<2;j++){
 						two_numlist.push_back(_ACR[i][j]);
@@ -102,7 +102,7 @@ bool CprFullHouseMaster::containsMe(const CprCollection& col, CprHand& res) {
 			three_vector.push_back(i);
 			two_vector.push_back(i);
 		}else{
-			if(_ACR[i].size()>=2){
+			if(_ACR[i].size()==2){
 				two_vector.push_back(i);
 			}
 		}
@@ -140,11 +140,11 @@ bool CprFullHouseMaster::containsMeUnder(const CprCollection& col, const CprHand
 	}
 
 	for(int i1=14;i1>=2;i1--){
-		if(_ACR[i1].size()==3){
+		if(_ACR[i1].size()>=3){
 			for(int j=0;j<3;j++)
 				newlist.push_back(_ACR[i1][j]);
 			for(int i2=14;i2>=2;i2--){
-				if(_ACR[i2].size()>=2){
+				if(_ACR[i2].size()>=2&&i2!=i1){
 					for(int j=0;j<2;j++)
 						newlist.push_back(_ACR[i2][j]);
 					CprHand newhand(newlist);

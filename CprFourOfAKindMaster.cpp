@@ -102,7 +102,7 @@ bool CprFourOfAKindMaster::containsMeUnder(const CprCollection& col, const CprHa
 			for(int j=0;j<4;j++)
 				newlist.push_back(_ACR[i1][j]);
 			for(int i2=14;i2>=2;i2--){
-				if(_ACR[i2].size()){
+				if(_ACR[i2].size()&&i2!=i1){
 					for(int j=0;j<1;j++)
 						newlist.push_back(_ACR[i2][j]);
 					CprHand newhand(newlist);
