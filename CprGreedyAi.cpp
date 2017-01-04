@@ -7,7 +7,7 @@ CprGreedyAi::~CprGreedyAi() {
 }
 
 void CprGreedyAi::playerStrategy() {
-    _collection.resetAllHands();
+    //_collection.resetAllHands();
     //_collection.printByRank();
 	CprHandMaster master;
 	CprHand h1=master.GetBestHand(_collection);

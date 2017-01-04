@@ -105,6 +105,21 @@ void CprHand::print() const {
     }
     cout<<endl;
 }
+void CprHand::printByRank() const {
+    // TODO: print avaliable cards, sorted by rank
+    // (for same rank, sorted by suit)
+    // e.g. suppose _availCards is (3c 2s Jc 4d 7c)
+    // then print "2c 3c 4d 7c Jc \n"
+    for(int i=1;i<=13;i++){
+        for(int j=1;j<=4;j++){
+            CprCard t(13*(j-1)+i);
+            if(isCardAvailable(t)){
+                cout<<t<<" ";
+            }
+        }
+    }
+    cout<<endl;
+}
  
 HandType CprHand::getType() const {
     // DONE

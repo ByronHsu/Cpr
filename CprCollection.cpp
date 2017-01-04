@@ -109,14 +109,16 @@ void CprCollection::printBySuit() const {
  
 void CprCollection::showCollection() const {
     // DONE: do not modify me
+    /*
     if (!_availCards.empty()) {
         cout << "Available cards: " << endl << "  ";
         printByRank();
     }
+    */
     for (unsigned i = 0; i < _hands.size(); ++i) {
         const CprHand& hand = _hands.at(i);
         cout << "hand " << (i + 1) << ": ";
-        hand.print();
+        hand.printByRank();
     }
 }
  
@@ -125,21 +127,21 @@ bool CprCollection::isValidSet() {
     if(!_hands[0].empty()&&!_hands[1].empty()&&!_hands[2].empty())
         return 1;
     if(!_hands[0].empty()&&!_hands[1].empty()){
-        CprHand temp(_availCards);
-        _hands[2]=temp;
+        CardList temp=_availCards;
+        settingHand(2,temp);
         return 1;
     }
     if(!_hands[1].empty()&&!_hands[2].empty()){
-        CprHand temp(_availCards);
-        _hands[0]=temp;
+        CardList temp=_availCards;
+        settingHand(0,temp);
         return 1;
     }
     if(!_hands[0].empty()&&!_hands[2].empty()){
-        CprHand temp(_availCards);
-        _hands[1]=temp;
+        CardList temp=_availCards;
+        settingHand(1,temp);
         return 1;
     }
-    else return 0;
+    return 0;
 }
  
 int CprCollection::isCardAvailable(const CprCard& c) const {

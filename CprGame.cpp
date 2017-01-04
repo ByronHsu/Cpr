@@ -28,6 +28,7 @@ CprGame::~CprGame() {
 void CprGame::setting() {
 	// FIXME: modify AI by your greedy/regular/custom AI
 	const int playerNum = 4;
+	/*
 	if (playerNum >= 4) {
 		CprPlayer* ai = new CprGreedyAi();
 		ai->setId("AI3");
@@ -41,19 +42,34 @@ void CprGame::setting() {
 	CprPlayer* ai = new CprGreedyAi();
 	ai->setId("AI1");
 	_players.push_back(ai);
-
-	cout << "Human playing or AI playing? (H/A) \n> ";
-	char line[64];
-	cin.getline(line, 64);
-	char ch = line[0];
-	if (ch == 'H' || ch == 'h') {
-		CprPlayer* human = new CprHumanPlayer();
-		human->setId("You");
-		_players.push_back(human);
-	} else {
-		CprPlayer* ai = new CprGreedyAi();
-		ai->setId("AI0");
-		_players.push_back(ai);
+	*/
+	string ss[4]={"AI0","AI1","AI2","AI3"};
+	for(int i=0;i<=3;i++){
+		cout << "Player"<<i<<": Human playing or AI playing? (H/A) \n> ";
+		char line[64];
+		cin.getline(line, 64);
+		char ch = line[0];
+		if (ch == 'H' || ch == 'h') {
+			cout << "Please type in your id:"<<endl;
+			cin.getline(line, 64);
+			CprPlayer* human = new CprHumanPlayer();
+			human->setId(line);
+			_players.push_back(human);
+		} else {
+			cout<<"Which AI?"<<endl;
+			cin.getline(line, 64);
+			char ch = line[0];
+			if(ch == 'G'|| ch=='g'){
+				CprPlayer* ai = new CprGreedyAi();
+				ai->setId(ss[i]);
+				_players.push_back(ai);
+			}
+			if(ch == 'S'|| ch=='s'){
+				CprPlayer* ai = new CprStupidAi();
+				ai->setId(ss[i]);
+				_players.push_back(ai);
+			}
+		}
 	}
 }
 

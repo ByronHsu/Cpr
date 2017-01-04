@@ -26,7 +26,7 @@ void print_type(int num){
 	if(num==3)
 		cout<<"OnePair"<<endl;
 	if(num==2)
-		cout<<"HightCard"<<endl;
+		cout<<"HighCard"<<endl;
 	if(num==1)
 		cout<<"Xianggong"<<endl;
 	if(num==0)
@@ -145,5 +145,8 @@ void CprStage::printScores() const {
 	for(int player=0;player<=3;player++){
 		cout<<_players[player]->_id<<":scores="<<_players[player]->_score<<endl;
 	}
+	cout<<endl;
+	cout<<"Press Enter To Continue"<<endl;
+	getchar();
 }
 

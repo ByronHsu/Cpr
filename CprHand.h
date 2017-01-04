@@ -34,6 +34,8 @@ public:
 	const CprCard getCard(int idx) const;
 	const CardList* getACR() const;//new
 	void computeACR();//new
+
+	void printByRank() const;//new
 	
 private:
 	CardList _cards;
