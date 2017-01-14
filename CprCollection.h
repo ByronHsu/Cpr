@@ -12,6 +12,7 @@ class CprCollection
 	FRIEND_ALL;
 	friend class CprHanmoOuJrAi;
 	friend class CprStage;
+	friend class CprGame;
 	friend class CprStupidAi;
 	friend class CprGreedyAi;
 	friend class CprHandMaster;

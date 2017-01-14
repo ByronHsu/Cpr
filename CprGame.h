@@ -18,6 +18,7 @@ public:
 	void start();
 	void Tstart();
 	void end();
+	void Assistant();
 private:
 	vector<CprPlayer*> _players;
 };

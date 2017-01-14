@@ -9,7 +9,7 @@
 #include "CprStupidAi.h"
 #include "CprGreedyAi.h"
 #include "CprHumanPlayer.h"
-#include<cstdio>
+#include <cstdio>
 #include "CprHanmoOuJrAi.h"
 CprGame::CprGame() {
 	cout << endl;
@@ -24,6 +24,28 @@ CprGame::~CprGame() {
 		CprPlayer *p = _players.at(i);
 		delete p;
 	}
+}
+void CprGame::Assistant(){
+	_players.clear();
+	CprPlayer* ai = new CprHanmoOuJrAi();
+    ai->setId("HanmoOuJr");
+    _players.push_back(ai);
+
+    cout<<"Type in your cardlist:"<<endl;
+    for(int i=0;i<13;i++){
+    	CprCard c;
+    	cin>>c;
+    	_players[0]->_collection._cards.push_back(c);
+    	_players[0]->_collection._availCards.push_back(c);
+		sort((_players[0]->_collection)._cards.begin(), (_players[0]->_collection)._cards.end());
+		sort((_players[0]->_collection)._availCards.begin(), (_players[0]->_collection)._availCards.end());
+		(_players[0]->_collection).computeACR();
+    }
+    _players[0]->strategy();
+    for(int i=0;i<3;i++){
+ 		cout<<i+1<<":";
+    	_players[0]->_collection._hands[i].print();
+    }	
 }
 void CprGame::Tsetting(){
 	string ss[4]={"AI0","AI1","AI2","AI3"};

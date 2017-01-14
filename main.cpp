@@ -13,11 +13,8 @@ using namespace std;
 int main() {
 	// FIXME: put your group id here
 	const int GroupID = 0;
-	cout << "This is group " << GroupID << "'s program." << endl;
+	cout << "This is group " << "our program." << endl;
 
-	int seed = (unsigned)time(0);
-	cout << "Using seed " << seed << ".." << endl;
- 	srand(seed);
  	int GameMode;
  	cout << "Choose Game Mode:" <<endl;
  	cout << "1 : Custom"<<endl;
@@ -34,9 +31,10 @@ int main() {
         game.Tsetting();
         game.Tstart();
     }
-    /*
-    if(GameMode==2){
-        game.Asetting();
-    }*/
+    
+    if(GameMode==3){
+        while(1)
+        game.Assistant();
+    }
 
 }
