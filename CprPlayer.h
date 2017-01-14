@@ -11,6 +11,7 @@
 
 class CprPlayer
 {
+    friend class CprGame;
 	friend CprDealer;
 	friend CprStage;
 public:
@@ -20,13 +21,13 @@ public:
 	void setId(string);
 	CprHand & hand(int idx);
 	int& getScore() { return _score; }
-	
+
 
 protected:
 	CprCollection _collection;
 	CprCollection& collection();
 	const CprCollection& collection() const;
-	
+
 private:
 	string _id;
 	int _score;

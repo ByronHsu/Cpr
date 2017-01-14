@@ -55,7 +55,7 @@ bool CprStraightMaster::determineMe(CprHand& hand) {
 					for(int k=0;k<=4;k++){
 						int index2=i+k;
 						if(i+k>13)
-							index%=13;
+                        index%=13;
 						newlist.push_back(_ACR[index2][0]);
 					}
 					hand=newlist;
@@ -95,7 +95,7 @@ bool CprStraightMaster::containsMe(const CprCollection& col, CprHand& res) {
 
 		}
 	}
-	return false;	
+	return false;
 }
 bool CprStraightMaster::containsMeUnder(const CprCollection& col, const CprHand& uppHand, CprHand& res) {
 	CardList _ACR[15];
@@ -130,5 +130,5 @@ bool CprStraightMaster::containsMeUnder(const CprCollection& col, const CprHand&
 		}
 	}
 
-	return false;	
+	return false;
 }

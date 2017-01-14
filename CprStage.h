@@ -10,11 +10,11 @@
 
 class CprStage
 {
+    friend class CprGame;
 public:
-	CprStage(vector<CprPlayer*>&, int id);
+	CprStage(int,vector<CprPlayer*>&, int id);
 	~CprStage();
 	void start();
-
 private:
 	void dealingPhase();
 	void strategyPhase();
@@ -25,5 +25,6 @@ private:
 
 	vector<CprPlayer*>& _players;
 	int _stageId;
+	int T;
 };
 

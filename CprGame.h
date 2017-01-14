@@ -14,7 +14,9 @@ public:
 	CprGame();
 	~CprGame();
 	void setting();
+	void Tsetting();
 	void start();
+	void Tstart();
 	void end();
 private:
 	vector<CprPlayer*> _players;

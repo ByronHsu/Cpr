@@ -10,7 +10,7 @@
 #include "CprHumanPlayer.h"
 #include "CprCollection.h"
 #include <sstream>
-
+#include<stdio.h>
 CprHumanPlayer::CprHumanPlayer() {
 }
 
@@ -19,12 +19,12 @@ CprHumanPlayer::~CprHumanPlayer() {
 
 void CprHumanPlayer::playerStrategy() {
 	for(int i=0;i<100;i++){
-		cout<<"\033[44;37m你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我你看不見我\033[0m"<<endl;
+		cout<<"Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!"<<endl;
 	}
 	cout<<endl;
 	cout<<"Press Enter To Continue"<<endl;
 	getchar();
-	cout<<"\033[1;31mHint:\nStraightFlush>FourOfAKind>FullHouse>Flush>Straight>ThreeOfAKind>TwoPairs>OnePair>HighCard\033[0m"<<endl;
+	cout<<"Hint:\nStraightFlush>FourOfAKind>FullHouse>Flush>Straight>ThreeOfAKind>TwoPairs>OnePair>HighCard"<<endl;
 	cout << "HI, your cards are as follows: " << endl << "  ";
 	collection().printByRank();
 	cout << "Please play.. try 'help' for command list:" << endl;
@@ -78,7 +78,7 @@ bool CprHumanPlayer::parseOneCmd() {
 	} else if (_command == "done") {
 		return checkValidStrategy();
 	} else {
-		parseHandCmd();		
+		parseHandCmd();
 	}
 	return false;
 }

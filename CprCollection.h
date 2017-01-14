@@ -10,6 +10,7 @@
 class CprCollection
 {
 	FRIEND_ALL;
+	friend class CprHanmoOuJrAi;
 	friend class CprStage;
 	friend class CprStupidAi;
 	friend class CprGreedyAi;
@@ -26,7 +27,9 @@ public:
 	const CprHand& getHand(int) const;
 	const CardList& getAvailableCards() const;
 	void computeACR();
+	void computeMAX();
 	const CardList* getACR() const;
+    const CardList * getMAX() const;
 	/* other methods */
 	void printByRank() const;
 	void printBySuit() const;
@@ -38,7 +41,7 @@ private:
 	CardList _availCards;
 	HandList _hands;
 	CardList _ACR[15];	// availableCardsWithRank
-
+    CardList _MAX[4];
 	/* helper */
 	int isCardAvailable(const CprCard&) const;
 };

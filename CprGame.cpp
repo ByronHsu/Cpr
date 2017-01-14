@@ -9,7 +9,8 @@
 #include "CprStupidAi.h"
 #include "CprGreedyAi.h"
 #include "CprHumanPlayer.h"
-
+#include<cstdio>
+#include "CprHanmoOuJrAi.h"
 CprGame::CprGame() {
 	cout << endl;
 	cout << "****************************" << endl;
@@ -24,28 +25,28 @@ CprGame::~CprGame() {
 		delete p;
 	}
 }
-
+void CprGame::Tsetting(){
+	string ss[4]={"AI0","AI1","AI2","AI3"};
+	CprPlayer* ai = new CprHanmoOuJrAi();
+    ai->setId("HanmoOuJr");
+    _players.push_back(ai);
+    CprPlayer* ai1 = new CprGreedyAi();
+    ai1->setId(ss[1]);
+    _players.push_back(ai1);
+    CprPlayer* ai2 = new CprGreedyAi();
+    ai2->setId(ss[2]);
+    _players.push_back(ai2);
+    CprPlayer* ai3 = new CprGreedyAi();
+    ai3->setId(ss[3]);
+    _players.push_back(ai3);
+}
 void CprGame::setting() {
 	// FIXME: modify AI by your greedy/regular/custom AI
-	const int playerNum = 4;
-	/*
-	if (playerNum >= 4) {
-		CprPlayer* ai = new CprGreedyAi();
-		ai->setId("AI3");
-		_players.push_back(ai);
-	}
-	if (playerNum >= 3) {
-		CprPlayer* ai = new CprGreedyAi();
-		ai->setId("AI2");
-		_players.push_back(ai);
-	}
-	CprPlayer* ai = new CprGreedyAi();
-	ai->setId("AI1");
-	_players.push_back(ai);
-	*/
+	//const int playerNum = 4;
 	string ss[4]={"AI0","AI1","AI2","AI3"};
 	for(int i=0;i<=3;i++){
 		cout << "Player"<<i<<": Human playing or AI playing? (H/A) \n> ";
+        getchar();
 		char line[64];
 		cin.getline(line, 64);
 		char ch = line[0];
@@ -64,25 +65,51 @@ void CprGame::setting() {
 				ai->setId(ss[i]);
 				_players.push_back(ai);
 			}
-			if(ch == 'S'|| ch=='s'){
+			else if(ch == 'S'|| ch=='s'){
 				CprPlayer* ai = new CprStupidAi();
 				ai->setId(ss[i]);
 				_players.push_back(ai);
 			}
+			else {
+                CprPlayer* ai = new CprHanmoOuJrAi();
+				ai->setId("OuJr");
+				_players.push_back(ai);
+			}
 		}
 	}
+
+
 }
 
 void CprGame::start() {
 	const int StageNum = 4;
 	for (int i = 1; i <= StageNum; ++i) {
 		srand(clock());
-		CprStage stage(_players, i);
+		CprStage stage(0,_players, i);
 		stage.start();
 	}
 	end();
 }
+void CprGame::Tstart() {
+	int StageNum;
+	cout<<"Type in number of games"<<endl;
+	cin>>StageNum;
+	for (int i = 1; i <= StageNum; ++i) {
+		srand(clock());
+		CprStage stage(1,_players, i);
+		stage.start();
+		if(i%100==0)cout<<"Completed "<<i<<" Stages."<<endl;
+		if(i==StageNum){
+            cout<<endl;
+            for(int player=0;player<=3;player++){
+                cout<<stage._players[player]->_id<<":scores="<<stage._players[player]->_score<<endl;
+            }
+            cout<<endl;
+            end();
+		}
+	}
 
+}
 void CprGame::end() {
 	cout << "Game End." << endl;
 	cout << "Press any button to exit.." << endl;

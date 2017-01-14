@@ -18,9 +18,25 @@ int main() {
 	int seed = (unsigned)time(0);
 	cout << "Using seed " << seed << ".." << endl;
  	srand(seed);
- 	
+ 	int GameMode;
+ 	cout << "Choose Game Mode:" <<endl;
+ 	cout << "1 : Custom"<<endl;
+	cout << "2 : Test"<<endl;
+	cout << "3 : Ai Assistant"<<endl;
+    //1 custom 2 test 3
+    cin>>GameMode;
 	CprGame game;
-	game.setting();
-	game.start();
-	return 0;
+    if(GameMode==1){
+        game.setting();
+        game.start();
+    }
+    if(GameMode==2){
+        game.Tsetting();
+        game.Tstart();
+    }
+    /*
+    if(GameMode==2){
+        game.Asetting();
+    }*/
+
 }

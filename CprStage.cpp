@@ -8,6 +8,7 @@
 #include "CprPlayer.h"
 #include "CprDealer.h"
 #include "CprHand.h"
+#include<cstdio>
 void print_type(int num){
 	if(num==10)
 		cout<<"StraightFlush"<<endl;
@@ -32,15 +33,18 @@ void print_type(int num){
 	if(num==0)
 		cout<<"Undefined"<<endl;
 }
-CprStage::CprStage(vector<CprPlayer *>& players, int id)
+CprStage::CprStage(int t,vector<CprPlayer *>& players, int id)
 	: _players(players), _stageId(id) {
+	    T=t;
 }
 
 CprStage::~CprStage() {
 }
 
 void CprStage::start() {
+	if(!T)
 	cout<<endl;
+	if(!T)
 	cout << "== Stage " << _stageId << " start!" << endl;
 	dealingPhase();
 	strategyPhase();
@@ -48,13 +52,15 @@ void CprStage::start() {
 	comparisonPhase();
 	shootingPhase();
 	printScores();
+	if(!T)
 	cout << "== Stage " << _stageId << " end" << endl << endl;
+	if(!T)
 	cout << endl;
 }
 
 void CprStage::dealingPhase() {
 	// TODO: call CprDealer to distribute cards to players
-	/* 
+	/*
 		e.g.
 		CprDealer dealer;
 	 	dealer.deal(_players);
@@ -99,7 +105,9 @@ void CprStage::comparisonPhase() {
 	*/
 	//cout<<"cmp"<<endl;
 	for (int ridx = 1; ridx <= 3; ++ridx) {
+	if(!T)
 		cout<<endl;
+	if(!T)
 		cout << "= Round " << ridx << ".." << endl;
 		for(int player=0;player<=3;player++){
 			int pg=0;
@@ -108,10 +116,15 @@ void CprStage::comparisonPhase() {
 				if(_players[player]->hand(ridx-1)<=_players[pnum]->hand(ridx-1))pg--;
 				if(_players[player]->hand(ridx-1)>=_players[pnum]->hand(ridx-1))pg++;
 			}
+            if(!T)
 			cout<<setw(8)<<_players[player]->_id<<":";
+			if(!T)
 			_players[player]->hand(ridx-1).print();
+            if(!T)
 			cout<<"type:";
+			if(!T)
 			print_type(_players[player]->hand(ridx-1)._type);
+            if(!T)
 			cout<<"score:"<<pg<<endl;
 			_players[player]->_score+=pg;
 		}
@@ -120,8 +133,10 @@ void CprStage::comparisonPhase() {
 
 void CprStage::shootingPhase() {
 	// TODO: check if someone shoots another
+    if(!T)
 	cout<<endl;
-	cout << "= Check shooting.." << endl;	
+    if(!T)
+	cout << "= Check shooting.." << endl;
 	for(int player=0;player<=3;player++){
 		for(int player2=0;player2<=3;player2++){
 			if(player==player2)continue;
@@ -129,6 +144,7 @@ void CprStage::shootingPhase() {
 				&&_players[player]->hand(1)>_players[player2]->hand(1)
 				 &&_players[player]->hand(2)>_players[player2]->hand(2))
 			{
+                if(!T)
 				cout<<_players[player]->_id<<"<+3> shoots "<<_players[player2]->_id<<"<-3>"<<endl;
 				_players[player]->_score+=3;
 				_players[player2]->_score-=3;
@@ -140,13 +156,19 @@ void CprStage::shootingPhase() {
 
 void CprStage::printScores() const {
 	// TODO: print all players' scores
+    if(!T)
 	cout<<endl;
+    if(!T)
 	cout << "== Stage " << _stageId << " scores.." << endl;
 	for(int player=0;player<=3;player++){
+        if(!T)
 		cout<<_players[player]->_id<<":scores="<<_players[player]->_score<<endl;
 	}
+    if(!T)
 	cout<<endl;
+    if(!T)
 	cout<<"Press Enter To Continue"<<endl;
+    if(!T)
 	getchar();
 }
 

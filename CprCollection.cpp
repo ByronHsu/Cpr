@@ -1,6 +1,6 @@
 #include "CprCollection.h"
 #include "CprHand.h"
- 
+
 CprHand& CprCollection::hand(int n){
     return _hands[n];
 }
@@ -11,7 +11,7 @@ CprCollection::CprCollection()
     :_cards(), _hands(3) {
     // DONE: now _hands.size() is 3
 }
- 
+
 CprCollection::~CprCollection() {
 }
 /*
@@ -64,7 +64,7 @@ bool CprCollection::settingHand(int hidx, const CardList& cs) {
     computeACR();
     return true;
 }
- 
+
 void CprCollection::resetAllHands() {
     // TODO: reset _availCards and all hands
     _availCards=_cards;
@@ -73,7 +73,7 @@ void CprCollection::resetAllHands() {
         _hands[i]=t;
     computeACR();
 }
- 
+
 void CprCollection::printByRank() const {
     // TODO: print avaliable cards, sorted by rank
     // (for same rank, sorted by suit)
@@ -89,13 +89,13 @@ void CprCollection::printByRank() const {
     }
     cout<<endl;
 }
- 
+
 void CprCollection::printBySuit() const {
     // TODO: print avaliable cards, sorted by suit
     // (for same suit, sorted by rank)
     // e.g. suppose _availCards is (3c 2s Jc 4d 7c)
     // then print "3c 7c Jc 4d 2s \n"
- 
+
     for(int j=1;j<=4;j++){
         for(int i=1;i<=13;i++){
             CprCard t(13*(j-1)+i);
@@ -106,7 +106,7 @@ void CprCollection::printBySuit() const {
     }
     cout<<endl;
 }
- 
+
 void CprCollection::showCollection() const {
     // DONE: do not modify me
     /*
@@ -121,7 +121,7 @@ void CprCollection::showCollection() const {
         hand.printByRank();
     }
 }
- 
+
 bool CprCollection::isValidSet() {
     //    TODO: determine whether all hands are set
     if(!_hands[0].empty()&&!_hands[1].empty()&&!_hands[2].empty())
@@ -143,7 +143,7 @@ bool CprCollection::isValidSet() {
     }
     return 0;
 }
- 
+
 int CprCollection::isCardAvailable(const CprCard& c) const {
     // TODO: find whether c is in _cards
     int in=0;
@@ -167,7 +167,7 @@ void CprCollection::computeACR() {
                     if(i==1){
                         tem[i].push_back(t);
                         tem[14].push_back(t);
- 
+
                     }
                     else{
                     tem[i].push_back(t);
@@ -176,12 +176,39 @@ void CprCollection::computeACR() {
             }
         }
     }
- 
+
     for(int i=0;i<15;i++){
         _ACR[i]=tem[i];
     }
 }
- 
+
 const CardList * CprCollection::getACR() const {
     return _ACR;
+}
+void CprCollection::computeMAX() {
+    //TODO: See Practice 2 in Week 14 Practice.pdf for more information
+    CardList tem[4];
+
+    for(int i=0;i<4;i++){
+        for(int j=2;j<=13;j++){
+            CprCard t(13*i+j);
+            int isCard=isCardAvailable(t);
+            if(isCard){
+                tem[i].push_back(t);
+            }
+        }
+    }
+    for(int i=0;i<4;i++){
+        CprCard t(13*i+1);
+        int isCard=isCardAvailable(t);
+        if(isCard){
+            tem[i].push_back(t);
+        }
+    }
+    for(int i=0;i<4;i++){
+        _MAX[i]=tem[i];
+    }
+}
+const CardList * CprCollection::getMAX() const {
+    return _MAX;
 }
