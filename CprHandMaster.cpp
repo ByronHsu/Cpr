@@ -50,6 +50,11 @@ CprHand CprHandMaster::GetBestHand(const CprCollection& col) {
 	CprHandMaster* ms;
 	CprHand best;
 	if(col._availCards.size()==3){
+		HandType type = HandType(5);
+		ms = CreateMaster(type);
+		if(ms->containsMe(col,best)){
+			return best;
+		}			
 		for(int i=3;i>=2;--i){
 			//cout<<i<<endl;
 			HandType type = HandType(i);
@@ -60,7 +65,7 @@ CprHand CprHandMaster::GetBestHand(const CprCollection& col) {
 		}
 	}
 	else{
-		for(int i=HTHighestType;i>=HTLowestType;--i){
+		for(int i=10;i>=HTLowestType;--i){
 			//cout<<i<<endl;
 			HandType type = HandType(i);
 			ms = CreateMaster(type);

@@ -49,7 +49,7 @@ void CprGame::Assistant(){
 }
 void CprGame::Tsetting(){
 	string ss[4]={"AI0","AI1","AI2","AI3"};
-	CprPlayer* ai = new CprHanmoOuJrAi();
+	CprPlayer* ai = new CprGreedyAi();
     ai->setId("HanmoOuJr");
     _players.push_back(ai);
     CprPlayer* ai1 = new CprGreedyAi();

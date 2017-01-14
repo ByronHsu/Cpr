@@ -10,6 +10,61 @@
 void CprHand::setXianggong(){
     _type=(HandType)1;
 }
+
+void CprHand::Handsort(){
+    //由大到小
+    //sort(_cards.begin(),_cards.end(),compare);
+    CardList AACR[15];
+    CardList tem[15];
+    for(int i=1;i<=13;i++){
+        for(int j=1;j<=4;j++){
+            CprCard t(13*(j-1)+i);
+            int isCard=isCardAvailable(t);
+            if(isCard){
+                for(int k=0;k<isCard;k++){
+                    if(i==1){
+                        tem[i].push_back(t);
+                        tem[14].push_back(t);
+
+                    }
+                    else{
+                    tem[i].push_back(t);
+                    }
+                }
+            }
+        }
+    }
+    for(int i=0;i<15;i++){
+        AACR[i]=tem[i];
+    }
+    CardList newlist;
+    for(int i=14;i>=2;i--){
+        if(AACR[i].size()==4){
+            for(int j=0;j<4;j++)
+                newlist.push_back(AACR[i][j]);
+        }
+    }
+    for(int i=14;i>=2;i--){
+        if(AACR[i].size()==3){
+            for(int j=0;j<3;j++)
+                newlist.push_back(AACR[i][j]);
+        }
+    }
+    for(int i=14;i>=2;i--){
+        if(AACR[i].size()==2){
+            for(int j=0;j<2;j++)
+                newlist.push_back(AACR[i][j]);
+        }
+    }
+    for(int i=14;i>=2;i--){
+        if(AACR[i].size()==1){
+            for(int j=0;j<1;j++)
+                newlist.push_back(AACR[i][j]);
+        }
+    }
+    CprHand newhand(newlist);
+    (*this)._cards=newhand._cards;
+}
 const CprCard CprHand::getCard(int idx) const {
     return _cards.at(idx);
 }

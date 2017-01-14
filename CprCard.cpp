@@ -54,10 +54,9 @@ bool CprCard::notStrongerThan(const CprCard &c) const {
     // Otherwise, return false
     if(rankA()<=c.rankA())
         return true;
- 
     return false;
 }
- 
+
 bool CprCard::sameWith(const CprCard& c) const {
     // TODO: determine if two cards are same
     if(rank()==c.rank()&&suit()==c.suit())
@@ -77,6 +76,7 @@ bool CprCard::diffWith(const CprCard& c) const {
 bool CprCard::operator<=(const CprCard &c) const {
     return this->notStrongerThan(c);
 }
+
 bool CprCard::operator < (const CprCard& c) const {
     // only for sorting purpose
     return _cardId < c._cardId;

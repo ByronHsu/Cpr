@@ -83,7 +83,11 @@ void CprStage::checkXianggongPhase() {
 	//cout<<"xx"<<endl;
 	vector<CprPlayer*>::iterator it=_players.begin();
 	for (;it < _players.end();it++) {
-		if (!CprHandMaster::Compare((*it)->hand(0), (*it)->hand(1)) || !CprHandMaster::Compare((*it)->hand(1), (*it)->hand(2))) {
+		if (!CprHandMaster::Compare((*it)->hand(0), (*it)->hand(1)) || !CprHandMaster::Compare((*it)->hand(1), (*it)->hand(2))) {		
+			cout<<"相公啦！！！"<<endl;
+			((*it)->hand(0)).print();
+			((*it)->hand(1)).print();
+			((*it)->hand(2)).print();
 			((*it)->hand(0)).setXianggong();
 			((*it)->hand(1)).setXianggong();
 			((*it)->hand(2)).setXianggong();
@@ -95,15 +99,10 @@ void CprStage::checkXianggongPhase() {
 void CprStage::comparisonPhase() {
 	CprHandMaster master;
 	// TODO: compare players' hands and print them with tricks num
-	/*
-	for (int ridx = 1; ridx <= 3; ++ridx) {
-		for(int player=0;player<=3;player++){
-			//_players[player]->hand(ridx-1).print();
-			master.DetermineType(_players[player]->hand(ridx-1));
-		}
+	for(int i=0;i<=3;i++){
+		for(int j=0;j<3;j++)
+			_players[i]->hand(j).Handsort();
 	}
-	*/
-	//cout<<"cmp"<<endl;
 	for (int ridx = 1; ridx <= 3; ++ridx) {
 	if(!T)
 		cout<<endl;
