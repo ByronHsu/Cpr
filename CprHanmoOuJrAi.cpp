@@ -376,7 +376,8 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
                                 Set_ACR();
                             }
                         }
-                        if(_MAX[i][0].rankA()==2&&_MAX[i][_MAX[i].size()-1].rankA()==14){
+                        if(s==4&&_MAX[i][0].rankA()==2&&_MAX[i][_MAX[i].size()-1].rankA()==14){
+                            //cout<<_MAX[i][0]<<_MAX[i][_MAX[i].size()-1]<<"SFA2345"<<endl;
                             L[count].push_back(_MAX[i][_MAX[i].size()-1]);
                             L[count].push_back(_MAX[i][s-1]);
                             L[count].push_back(_MAX[i][s-2]);
