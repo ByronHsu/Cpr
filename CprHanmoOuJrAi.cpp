@@ -353,13 +353,36 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
             if(_MAX[i].size()>=5){
                 for(int s=_MAX[i].size()-1;s>=4;s--){
                     if(_MAX[i][s-1].rankA()==_MAX[i][s-2].rankA()+1&&_MAX[i][s-2].rankA()==_MAX[i][s-3].rankA()+1&&_MAX[i][s-3].rankA()==_MAX[i][s-4].rankA()+1){
-                        if(_MAX[i][s].rankA()==_MAX[i][s-1].rankA()+1||(_MAX[i][s].rankA()==14&&_MAX[i][s-1].rankA()==5)){
+                        //cout<<"check1"<<endl;
+                        if(_MAX[i][s].rankA()==_MAX[i][s-1].rankA()+1){
+                            //cout<<"check"<<endl;
                             L[count].push_back(_MAX[i][s]);
                             L[count].push_back(_MAX[i][s-1]);
                             L[count].push_back(_MAX[i][s-2]);
                             L[count].push_back(_MAX[i][s-3]);
                             L[count].push_back(_MAX[i][s-4]);
                             Delete_Card(_MAX[i][s]);
+                            Delete_Card(_MAX[i][s-1]);
+                            Delete_Card(_MAX[i][s-2]);
+                            Delete_Card(_MAX[i][s-3]);
+                            Delete_Card(_MAX[i][s-4]);
+                            Set_ACR();
+                            if(count==0)return 1;
+                            if(Dfs(type,count-1))
+                                return 1;
+                            else{
+                                L[count].clear();
+                                c_collection=t_col;
+                                Set_ACR();
+                            }
+                        }
+                        if(_MAX[i][0].rankA()==2&&_MAX[i][_MAX[i].size()-1].rankA()==14){
+                            L[count].push_back(_MAX[i][_MAX[i].size()-1]);
+                            L[count].push_back(_MAX[i][s-1]);
+                            L[count].push_back(_MAX[i][s-2]);
+                            L[count].push_back(_MAX[i][s-3]);
+                            L[count].push_back(_MAX[i][s-4]);
+                            Delete_Card(_MAX[i][_MAX[i].size()-1]);
                             Delete_Card(_MAX[i][s-1]);
                             Delete_Card(_MAX[i][s-2]);
                             Delete_Card(_MAX[i][s-3]);

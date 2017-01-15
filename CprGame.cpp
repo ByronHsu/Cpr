@@ -11,6 +11,7 @@
 #include "CprHumanPlayer.h"
 #include <cstdio>
 #include "CprHanmoOuJrAi.h"
+#include<ctime>
 CprGame::CprGame() {
 	cout << endl;
 	cout << "****************************" << endl;
@@ -41,11 +42,16 @@ void CprGame::Assistant(){
 		sort((_players[0]->_collection)._availCards.begin(), (_players[0]->_collection)._availCards.end());
 		(_players[0]->_collection).computeACR();
     }
+    clock_t start,stop;
+    start=clock();
     _players[0]->strategy();
+    stop=clock();
+    cout<<"\n";
     for(int i=0;i<3;i++){
- 		cout<<i+1<<":";
+ 		cout<<"Hand"<<i+1<<":";
     	_players[0]->_collection._hands[i].print();
     }
+    cout<<"\nCalculation Time: "<<double(stop -start)/CLOCKS_PER_SEC*1000<<" miliseconds\n"<<endl;
 }
 void CprGame::Tsetting(){
 	string ss[4]={"AI0","AI1","AI2","AI3"};
