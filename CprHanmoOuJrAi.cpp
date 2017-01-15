@@ -1,7 +1,6 @@
 #include "CprHanmoOuJrAi.h"
 #include <cstdio>
 CprHanmoOuJrAi::CprHanmoOuJrAi(){
-    RFXGa=0;
 }
 
 CprHanmoOuJrAi::~CprHanmoOuJrAi() {
@@ -18,8 +17,9 @@ void CprHanmoOuJrAi::playerStrategy() {
     Set_ACR();
     for(int i=0;i<102;i++){
     	if(Dfs(101-i,2)){
+            RFXGa=0;
             if(Order[101-i][1]==10&&Order[101-i][2]==10)RFXGa=1;
-            //if(Order[101-i][0]==3&&Order[101-i][1]==3&&Order[101-i][2]==4)Special1();
+            if(Order[101-i][0]==3&&Order[101-i][1]==3&&Order[101-i][2]==4)Special1();
             break;
     	}
     }
@@ -381,11 +381,11 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
                         }
                         if(s==4&&_MAX[i][0].rankA()==2&&_MAX[i][_MAX[i].size()-1].rankA()==14){
                             //cout<<_MAX[i][0]<<_MAX[i][_MAX[i].size()-1]<<"SFA2345"<<endl;
-                            L[count].push_back(_MAX[i][_MAX[i].size()-1]);
                             L[count].push_back(_MAX[i][s-1]);
                             L[count].push_back(_MAX[i][s-2]);
                             L[count].push_back(_MAX[i][s-3]);
                             L[count].push_back(_MAX[i][s-4]);
+                            L[count].push_back(_MAX[i][_MAX[i].size()-1]);
                             Delete_Card(_MAX[i][_MAX[i].size()-1]);
                             Delete_Card(_MAX[i][s-1]);
                             Delete_Card(_MAX[i][s-2]);

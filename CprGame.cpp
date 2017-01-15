@@ -11,8 +11,7 @@
 #include "CprHumanPlayer.h"
 #include <cstdio>
 #include "CprHanmoOuJrAi.h"
-#include "CprHanmoOuJrJrAi.h"
-#include <ctime>
+#include<ctime>
 CprGame::CprGame() {
 	cout << endl;
 	cout << "****************************" << endl;
@@ -59,8 +58,8 @@ void CprGame::Tsetting(){
 	CprPlayer* ai = new CprHanmoOuJrAi();
     ai->setId("HanmoOuJr");
     _players.push_back(ai);
-    CprPlayer* ai1 = new CprHanmoOuJrJrAi();
-    ai1->setId("HanmoOuJrJr");
+    CprPlayer* ai1 = new CprGreedyAi();
+    ai1->setId(ss[1]);
     _players.push_back(ai1);
     CprPlayer* ai2 = new CprGreedyAi();
     ai2->setId(ss[2]);
