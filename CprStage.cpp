@@ -9,6 +9,9 @@
 #include "CprDealer.h"
 #include "CprHand.h"
 #include<cstdio>
+#include<iomanip>
+#include<string>
+
 void print_type(int num){
 	if(num==10)
 		cout<<"StraightFlush"<<endl;
@@ -83,14 +86,16 @@ void CprStage::checkXianggongPhase() {
 	//cout<<"xx"<<endl;
 	vector<CprPlayer*>::iterator it=_players.begin();
 	for (;it < _players.end();it++) {
-		if (!CprHandMaster::Compare((*it)->hand(0), (*it)->hand(1)) || !CprHandMaster::Compare((*it)->hand(1), (*it)->hand(2))) {		
-			cout<<"相公啦！！！"<<endl;
+		if (!CprHandMaster::Compare((*it)->hand(0), (*it)->hand(1)) || !CprHandMaster::Compare((*it)->hand(1), (*it)->hand(2))) {
+			cout<<"Xianggong Alert"<<endl;
 			((*it)->hand(0)).print();
 			((*it)->hand(1)).print();
 			((*it)->hand(2)).print();
 			((*it)->hand(0)).setXianggong();
 			((*it)->hand(1)).setXianggong();
 			((*it)->hand(2)).setXianggong();
+			getchar();
+			getchar();
 		}
 	}
 	//cout<<"xxok"<<endl;
@@ -130,6 +135,23 @@ void CprStage::comparisonPhase() {
 	}
 }
 
+void print_rank(int rank){
+	switch(rank){
+		case 3:
+			cout<<" (1st)";
+			break;
+		case 2:
+			cout<<" (2nd)";
+			break;
+		case 1:
+			cout<<" (3rd)";
+			break;
+		case 0:
+			cout<<" (4th)";
+			break;
+	}
+}
+
 void CprStage::shootingPhase() {
 	// TODO: check if someone shoots another
     if(!T)
@@ -158,10 +180,19 @@ void CprStage::printScores() const {
     if(!T)
 	cout<<endl;
     if(!T)
-	cout << "== Stage " << _stageId << " scores.." << endl;
+	cout << "== Stage "<< _stageId << " scores.." << endl;
 	for(int player=0;player<=3;player++){
         if(!T)
-		cout<<_players[player]->_id<<":scores="<<_players[player]->_score<<endl;
+		cout<<_players[player]->_id<<" "<<setw(23-(_players[player]->_id).length())<<setw(4)<<_players[player]->_score;
+		int sum = 0;
+		for(int i = 0; i <= 3; i++){
+			if(_players[player] -> _score >= _players[i] -> _score && i != player)
+				sum += 1;
+		}
+		if(!T)
+		print_rank(sum);
+		if(!T)
+		cout<<endl;
 	}
     if(!T)
 	cout<<endl;
@@ -170,4 +201,22 @@ void CprStage::printScores() const {
     if(!T)
 	getchar();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

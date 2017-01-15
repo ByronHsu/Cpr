@@ -27,9 +27,9 @@ protected:
 	CprCollection _collection;
 	CprCollection& collection();
 	const CprCollection& collection() const;
+	string _id;
 
 private:
-	string _id;
 	int _score;
 	virtual void playerStrategy() = 0;
 };

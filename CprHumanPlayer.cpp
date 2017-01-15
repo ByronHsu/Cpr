@@ -22,6 +22,7 @@ void CprHumanPlayer::playerStrategy() {
 		cout<<"Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!!Browns for Super Bowl!!"<<endl;
 	}
 	cout<<endl;
+	cout<<_id<<": \n";
 	cout<<"Press Enter To Continue"<<endl;
 	getchar();
 	cout<<"Hint:\nStraightFlush>FourOfAKind>FullHouse>Flush>Straight>ThreeOfAKind>TwoPairs>OnePair>HighCard"<<endl;

@@ -11,6 +11,7 @@ class CprCollection
 {
 	FRIEND_ALL;
 	friend class CprHanmoOuJrAi;
+	friend class CprHanmoOuJrJrAi;
 	friend class CprStage;
 	friend class CprGame;
 	friend class CprStupidAi;

@@ -12,8 +12,8 @@ using namespace std;
 
 int main() {
 	// FIXME: put your group id here
-	const int GroupID = 0;
-	cout << "This is group " << "our program." << endl;
+	//const int GroupID = 0;
+	cout << "This is group " << "11's program." << endl;
 
  	int GameMode;
  	cout << "Choose Game Mode:" <<endl;
@@ -31,7 +31,7 @@ int main() {
         game.Tsetting();
         game.Tstart();
     }
-    
+
     if(GameMode==3){
         while(1)
         game.Assistant();

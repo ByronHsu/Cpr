@@ -11,7 +11,8 @@
 #include "CprHumanPlayer.h"
 #include <cstdio>
 #include "CprHanmoOuJrAi.h"
-#include<ctime>
+#include "CprHanmoOuJrJrAi.h"
+#include <ctime>
 CprGame::CprGame() {
 	cout << endl;
 	cout << "****************************" << endl;
@@ -48,18 +49,18 @@ void CprGame::Assistant(){
     stop=clock();
     cout<<"\n";
     for(int i=0;i<3;i++){
- 		cout<<"Hand"<<i+1<<":";
+ 		cout<<i+1<<" ";
     	_players[0]->_collection._hands[i].print();
     }
     cout<<"\nCalculation Time: "<<double(stop -start)/CLOCKS_PER_SEC*1000<<" miliseconds\n"<<endl;
 }
 void CprGame::Tsetting(){
-	string ss[4]={"AI0","AI1","AI2","AI3"};
+	string ss[4]={"Greedy(0)","Greedy(1)","Greedy(2)","Greedy(3)"};
 	CprPlayer* ai = new CprHanmoOuJrAi();
     ai->setId("HanmoOuJr");
     _players.push_back(ai);
-    CprPlayer* ai1 = new CprGreedyAi();
-    ai1->setId(ss[1]);
+    CprPlayer* ai1 = new CprHanmoOuJrJrAi();
+    ai1->setId("HanmoOuJrJr");
     _players.push_back(ai1);
     CprPlayer* ai2 = new CprGreedyAi();
     ai2->setId(ss[2]);
@@ -71,7 +72,9 @@ void CprGame::Tsetting(){
 void CprGame::setting() {
 	// FIXME: modify AI by your greedy/regular/custom AI
 	//const int playerNum = 4;
-	string ss[4]={"AI0","AI1","AI2","AI3"};
+	string ss[4]={"Greedy(0)","Greedy(1)","Greedy(2)","Greedy(3)"};
+	string sss[4]={"Stupid(0)","Stupid(1)","Stupid(2)","Stupid(3)"};
+	string hs[4]={"HanmoOuJr(0)","HanmoOuJr(1)","HanmoOuJr(2)","HanmoOuJr(3)"};
 	for(int i=0;i<=3;i++){
 		cout << "Player"<<i<<": Human playing or AI playing? (H/A) \n> ";
         getchar();
@@ -80,13 +83,15 @@ void CprGame::setting() {
 		char ch = line[0];
 		if (ch == 'H' || ch == 'h') {
 			cout << "Please type in your id:"<<endl;
-			cin.getline(line, 64);
+			cin>>line;
+			//getchar();
 			CprPlayer* human = new CprHumanPlayer();
 			human->setId(line);
 			_players.push_back(human);
 		} else {
 			cout<<"Which AI?"<<endl;
-			cin.getline(line, 64);
+			cin>>line;
+			//getchar();
 			char ch = line[0];
 			if(ch == 'G'|| ch=='g'){
 				CprPlayer* ai = new CprGreedyAi();
@@ -95,12 +100,12 @@ void CprGame::setting() {
 			}
 			else if(ch == 'S'|| ch=='s'){
 				CprPlayer* ai = new CprStupidAi();
-				ai->setId(ss[i]);
+				ai->setId(sss[i]);
 				_players.push_back(ai);
 			}
 			else {
                 CprPlayer* ai = new CprHanmoOuJrAi();
-				ai->setId("HanmoOuJr");
+				ai->setId(hs[i]);
 				_players.push_back(ai);
 			}
 		}
@@ -120,7 +125,7 @@ void CprGame::start() {
 }
 void CprGame::Tstart() {
 	int StageNum;
-	cout<<"Type in number of games"<<endl;
+	cout<<"Type in number of Stages"<<endl;
 	cin>>StageNum;
 	for (int i = 1; i <= StageNum; ++i) {
 		srand(clock());

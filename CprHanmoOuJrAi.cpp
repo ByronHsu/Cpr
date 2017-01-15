@@ -1,6 +1,7 @@
 #include "CprHanmoOuJrAi.h"
 #include <cstdio>
 CprHanmoOuJrAi::CprHanmoOuJrAi(){
+    RFXGa=0;
 }
 
 CprHanmoOuJrAi::~CprHanmoOuJrAi() {
@@ -17,6 +18,8 @@ void CprHanmoOuJrAi::playerStrategy() {
     Set_ACR();
     for(int i=0;i<102;i++){
     	if(Dfs(101-i,2)){
+            if(Order[101-i][1]==10&&Order[101-i][2]==10)RFXGa=1;
+            //if(Order[101-i][0]==3&&Order[101-i][1]==3&&Order[101-i][2]==4)Special1();
             break;
     	}
     }
@@ -409,6 +412,11 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
 }
 
 void CprHanmoOuJrAi::prepareHand(){
+    if(RFXGa){
+        if(compareStraightFlush()){
+            swap(L[1],L[2]);
+        }
+    }
     for(int i=2;i>=0;i--){
         if(L[i].size()==0){
             int num;
@@ -453,4 +461,44 @@ int CprHanmoOuJrAi::compareFlush(const CardList &a,const CardList &b){
         if(a[i].rankA()<b[i].rankA())return 2;
     }
     return 0;
+}
+
+bool CprHanmoOuJrAi::compareStraightFlush(){
+    for(int i=0;i<=4;i++){
+        if(L[1][i].rankA()>L[2][i].rankA())return 1;
+    }
+    return 0;
+}
+
+void CprHanmoOuJrAi::Special1(){
+    for(int i=0;i<=2;i++){
+        L[i].clear();
+    }
+    c_collection=_collection;
+    Set_ACR();
+    int counter=0;
+    for(int i=2;i<=14;i++){
+        if(counter==2)break;
+        if(_ACR[i].size()>=2){
+            L[2].push_back(_ACR[i][_ACR[i].size()-1]);
+            L[2].push_back(_ACR[i][_ACR[i].size()-2]);
+            Delete_Card(_ACR[i][_ACR[i].size()-1]);
+            Delete_Card(_ACR[i][_ACR[i].size()-2]);
+            Set_ACR();
+            counter++;
+        }
+    }
+    counter=0;
+    for(int i=14;i>=2;i--){
+        if(counter==2)break;
+        if(_ACR[i].size()>=2){
+            L[1-counter].push_back(_ACR[i][_ACR[i].size()-1]);
+            L[1-counter].push_back(_ACR[i][_ACR[i].size()-2]);
+            Delete_Card(_ACR[i][_ACR[i].size()-1]);
+            Delete_Card(_ACR[i][_ACR[i].size()-2]);
+            Set_ACR();
+            counter++;
+        }
+    }
+    return;
 }
