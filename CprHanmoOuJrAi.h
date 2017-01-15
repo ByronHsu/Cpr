@@ -10,6 +10,7 @@ private:
 	virtual void playerStrategy();
 	bool Dfs(int,int);
 	void prepareHand();
+	int compareFlush(const CardList&,const CardList&);
 	void Delete_Card(CprCard);
 	void Set_ACR();
 	CardList L[3];

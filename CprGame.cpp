@@ -45,7 +45,7 @@ void CprGame::Assistant(){
     for(int i=0;i<3;i++){
  		cout<<i+1<<":";
     	_players[0]->_collection._hands[i].print();
-    }	
+    }
 }
 void CprGame::Tsetting(){
 	string ss[4]={"AI0","AI1","AI2","AI3"};
@@ -94,7 +94,7 @@ void CprGame::setting() {
 			}
 			else {
                 CprPlayer* ai = new CprHanmoOuJrAi();
-				ai->setId("OuJr");
+				ai->setId("HanmoOuJr");
 				_players.push_back(ai);
 			}
 		}

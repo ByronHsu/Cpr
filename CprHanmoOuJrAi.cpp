@@ -7,21 +7,16 @@ CprHanmoOuJrAi::~CprHanmoOuJrAi() {
 }
 
 void CprHanmoOuJrAi::playerStrategy() {
-    //_collection.resetAllHands();
     for(int i=0;i<_collection._cards.size();i++){
         c_collection._cards.push_back(_collection._cards[i]);
     }
     c_collection.resetAllHands();
     //c_collection.printByRank();
+    //c_collection.printBySuit();
     //getchar();
     Set_ACR();
-
-
     for(int i=0;i<102;i++){
-        //cout<<"try"<<i<<endl;
-        //cout<<Order[101-i][0]<<Order[101-i][1]<<Order[101-i][2]<<endl;
     	if(Dfs(101-i,2)){
-            //cout<<"strat"<<i<<endl;
             break;
     	}
     }
@@ -32,21 +27,7 @@ void CprHanmoOuJrAi::playerStrategy() {
         L[i].clear();
     }
 }
-/*
-enum HandType {
-	HTStraightFlush = 10,
-	HTFourOfAKind = 9,
-	HTFullHouse = 8,
-	HTFlush = 7,
-	HTStraight = 6,
-	HTThreeOfAKind = 5,
-	HTTwoPair = 4,
-	HTOnePair = 3,
-	HTHighCard = 2,
-	HTXianggong = 1,
-	HTUndefined = 0
-};
-*/
+
 void CprHanmoOuJrAi::Delete_Card(CprCard c){
 	for(int i=0;i<c_collection._availCards.size();i++){
 		if(c_collection._availCards[i]==c){
@@ -54,20 +35,18 @@ void CprHanmoOuJrAi::Delete_Card(CprCard c){
 		}
 	}
 }
+
 void CprHanmoOuJrAi::Set_ACR(){
 	c_collection.computeACR();
 	for(int i=0;i<15;i++){
-
 		_ACR[i]=(c_collection.getACR())[i];
-
 	}
 	c_collection.computeMAX();
 	for(int i=0;i<4;i++){
-
 		_MAX[i]=(c_collection.getMAX())[i];
-
 	}
 }
+
 bool CprHanmoOuJrAi::Dfs(int type,int count){
 	CprCollection t_col=c_collection;
 	if(Order[type][count]==3){//onepair
@@ -156,7 +135,7 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
 		}
 		return 0;
 	}
-	if(Order[type][count]==6){
+	if(Order[type][count]==6){//straight
         for(int i=14;i>=5;i--){
             if(_ACR[i].size()&&_ACR[i-1].size()&&_ACR[i-2].size()&&_ACR[i-3].size()&&_ACR[i-4].size()){
                 for(int p1=_ACR[i].size()-1;p1>=0;p1--){
@@ -191,33 +170,35 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
             }
         }
 	}
-	if(Order[type][count]==7){
+	if(Order[type][count]==7){//flush
+        int che[2]={4,4},counter=0;
         for(int i=0;i<=3;i++){
-            if(_MAX[i].size()>=5){
-                for(int p1=_MAX[i].size()-1;p1>=4;p1--){
-                    for(int p2=p1-1;p2>=3;p2--){
-                        for(int p3=p2-1;p3>=2;p3--){
-                            for(int p4=p3-1;p4>=1;p4--){
-                                for(int p5=p4-1;p5>=0;p5--){
-                                    L[count].push_back(_MAX[i][p1]);
-                                    L[count].push_back(_MAX[i][p2]);
-                                    L[count].push_back(_MAX[i][p3]);
-                                    L[count].push_back(_MAX[i][p4]);
-                                    L[count].push_back(_MAX[i][p5]);
-                                    Delete_Card(_MAX[i][p1]);
-                                    Delete_Card(_MAX[i][p2]);
-                                    Delete_Card(_MAX[i][p3]);
-                                    Delete_Card(_MAX[i][p4]);
-                                    Delete_Card(_MAX[i][p5]);
+            if(_MAX[i].size()>=5){che[counter]=i;counter++;}
+        }
+        if(counter==1){
+            for(int p1=_MAX[che[0]].size()-1;p1>=4;p1--){
+                for(int p2=p1-1;p2>=3;p2--){
+                    for(int p3=p2-1;p3>=2;p3--){
+                        for(int p4=p3-1;p4>=1;p4--){
+                            for(int p5=p4-1;p5>=0;p5--){
+                                L[count].push_back(_MAX[che[0]][p1]);
+                                L[count].push_back(_MAX[che[0]][p2]);
+                                L[count].push_back(_MAX[che[0]][p3]);
+                                L[count].push_back(_MAX[che[0]][p4]);
+                                L[count].push_back(_MAX[che[0]][p5]);
+                                Delete_Card(_MAX[che[0]][p1]);
+                                Delete_Card(_MAX[che[0]][p2]);
+                                Delete_Card(_MAX[che[0]][p3]);
+                                Delete_Card(_MAX[che[0]][p4]);
+                                Delete_Card(_MAX[che[0]][p5]);
+                                Set_ACR();
+                                if(count==0)return 1;
+                                if(Dfs(type,count-1))
+                                    return 1;
+                                else{
+                                    L[count].clear();
+                                    c_collection=t_col;
                                     Set_ACR();
-                                    if(count==0)return 1;
-                                    if(Dfs(type,count-1))
-                                        return 1;
-                                    else{
-                                        L[count].clear();
-                                        c_collection=t_col;
-                                        Set_ACR();
-                                    }
                                 }
                             }
                         }
@@ -225,11 +206,94 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
                 }
             }
         }
+        if(counter==2){
+            int s;
+            CardList V[2],M,smallA,smallB,small;
+            for(int i=0;i<=4;i++){
+                V[0].push_back(_MAX[che[0]][_MAX[che[0]].size()-i-1]);
+                V[1].push_back(_MAX[che[1]][_MAX[che[1]].size()-i-1]);
+                smallA.push_back(_MAX[che[0]][_MAX[che[0]].size()-i-1]);
+                smallB.push_back(_MAX[che[1]][_MAX[che[1]].size()-i-1]);
+            }
+            if(compareFlush(smallA,smallB)==1){
+                small=smallA;
+            }else small=smallB;
+            if(compareFlush(V[0],V[1])==2){
+                M=V[1];
+                s=1;
+            }
+            else{
+                M=V[0];
+                s=0;
+            }
+            L[count]=M;
+            for(int i=4;i>=0;i--){
+                Delete_Card(L[count][i]);
+            }
+            Set_ACR();
+            if(Dfs(type,count-1))
+                return 1;
+            else{
+                L[count].clear();
+                c_collection=t_col;
+                Set_ACR();
+            }
+            while(true){
+                for(int sui=0;sui<=1;sui++){
+                    for(int p1=_MAX[che[sui]].size()-1;p1>=4;p1--){
+                        for(int p2=p1-1;p2>=3;p2--){
+                            for(int p3=p2-1;p3>=2;p3--){
+                                for(int p4=p3-1;p4>=1;p4--){
+                                    for(int p5=p4-1;p5>=0;p5--){
+                                        V[sui].push_back(_MAX[che[sui]][p1]);
+                                        V[sui].push_back(_MAX[che[sui]][p2]);
+                                        V[sui].push_back(_MAX[che[sui]][p3]);
+                                        V[sui].push_back(_MAX[che[sui]][p4]);
+                                        V[sui].push_back(_MAX[che[sui]][p5]);
+                                        int checking=compareFlush(M,V[sui]);
+                                        if(p1==4)goto Wildcardround;
+                                        if(checking==0&&s==0&&sui==0)continue;
+                                        if(checking==0&&s==1)continue;
+                                        if(checking-1)continue;
+                                        goto Wildcardround;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Wildcardround:
+                if(compareFlush(V[0],V[1])-1){
+                    M=V[1];
+                    s=1;
+                }
+                else{
+                    M=V[0];
+                    s=0;
+                }
+                L[count]=M;
+                for(int i=4;i>=0;i--){
+                    Delete_Card(M[i]);
+                }
+                Set_ACR();
+                if(count==0)return 1;
+                if(Dfs(type,count-1))
+                    return 1;
+                else{
+                    L[count].clear();
+                    c_collection=t_col;
+                    Set_ACR();
+                }
+                if(compareFlush(small,M)==0){break;}
+            }
+        }
 	}
-	if(Order[type][count]==8){
-        for(int i=14;i>=3;i--){
+	if(Order[type][count]==8){//fullhouse
+        for(int i=14;i>=2;i--){
             if(_ACR[i].size()>=3){
-                for(int j=3;j<i;j++){
+                for(int j=2;j<=14;j++){
+                    if(i==j)continue;
                     if(_ACR[j].size()>=2){
                         for(int p1=_ACR[i].size()-1;p1>=2;p1--){
                             for(int p2=p1-1;p2>=1;p2--){
@@ -265,7 +329,7 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
             }
         }
 	}
-	if(Order[type][count]==9){
+	if(Order[type][count]==9){//fourofakind
         for(int i=14;i>=2;i--){
 			if(_ACR[i].size()>=4){
 				for(int j=3;j>=0;j--){
@@ -284,34 +348,30 @@ bool CprHanmoOuJrAi::Dfs(int type,int count){
 			}
 		}
 	}
-	if(Order[type][count]==10){
+	if(Order[type][count]==10){//straightflush
         for(int i=0;i<=3;i++){
             if(_MAX[i].size()>=5){
                 for(int s=_MAX[i].size()-1;s>=4;s--){
-                    if(_MAX[i][s].rankA()==_MAX[i][s-1].rankA()-1){
-                        if(_MAX[i][s-1].rankA()==_MAX[i][s-2].rankA()-1){
-                            if(_MAX[i][s-2].rankA()==_MAX[i][s-3].rankA()-1){
-                                if(_MAX[i][s-3].rankA()==_MAX[i][s-4].rankA()-1){
-                                    L[count].push_back(_MAX[i][s]);
-                                    L[count].push_back(_MAX[i][s-1]);
-                                    L[count].push_back(_MAX[i][s-2]);
-                                    L[count].push_back(_MAX[i][s-3]);
-                                    L[count].push_back(_MAX[i][s-4]);
-                                    Delete_Card(_MAX[i][s]);
-                                    Delete_Card(_MAX[i][s-1]);
-                                    Delete_Card(_MAX[i][s-2]);
-                                    Delete_Card(_MAX[i][s-3]);
-                                    Delete_Card(_MAX[i][s-4]);
-                                    Set_ACR();
-                                    if(count==0)return 1;
-                                    if(Dfs(type,count-1))
-                                        return 1;
-                                    else{
-                                        L[count].clear();
-                                        c_collection=t_col;
-                                        Set_ACR();
-                                    }
-                                }
+                    if(_MAX[i][s-1].rankA()==_MAX[i][s-2].rankA()+1&&_MAX[i][s-2].rankA()==_MAX[i][s-3].rankA()+1&&_MAX[i][s-3].rankA()==_MAX[i][s-4].rankA()+1){
+                        if(_MAX[i][s].rankA()==_MAX[i][s-1].rankA()+1||(_MAX[i][s].rankA()==14&&_MAX[i][s-1].rankA()==5)){
+                            L[count].push_back(_MAX[i][s]);
+                            L[count].push_back(_MAX[i][s-1]);
+                            L[count].push_back(_MAX[i][s-2]);
+                            L[count].push_back(_MAX[i][s-3]);
+                            L[count].push_back(_MAX[i][s-4]);
+                            Delete_Card(_MAX[i][s]);
+                            Delete_Card(_MAX[i][s-1]);
+                            Delete_Card(_MAX[i][s-2]);
+                            Delete_Card(_MAX[i][s-3]);
+                            Delete_Card(_MAX[i][s-4]);
+                            Set_ACR();
+                            if(count==0)return 1;
+                            if(Dfs(type,count-1))
+                                return 1;
+                            else{
+                                L[count].clear();
+                                c_collection=t_col;
+                                Set_ACR();
                             }
                         }
                     }
@@ -361,4 +421,12 @@ void CprHanmoOuJrAi::prepareHand(){
     _collection.settingHand(1,L[1]);
     _collection.settingHand(2,L[2]);
     return;
+}
+
+int CprHanmoOuJrAi::compareFlush(const CardList &a,const CardList &b){
+    for(int i=0;i<=4;i++){
+        if(a[i].rankA()>b[i].rankA())return 1;
+        if(a[i].rankA()<b[i].rankA())return 2;
+    }
+    return 0;
 }
